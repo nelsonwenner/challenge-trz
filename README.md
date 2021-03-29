@@ -1,24 +1,9 @@
-# README
+<h1 align="center">
+  TRZ (The Resident Zombie) - Backend
+</h1>
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## :mag_right: Database diagram
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+<p align="center">
+  <img alt="diagram" src="https://user-images.githubusercontent.com/40550247/112885226-e1ab4180-90a6-11eb-8576-0743b3b74fc0.png" />
+</p>
