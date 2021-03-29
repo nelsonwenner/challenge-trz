@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_192644) do
     t.string "name"
     t.integer "age"
     t.integer "gender"
+    t.boolean "infected", default: false
     t.integer "location_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
