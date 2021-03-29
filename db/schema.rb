@@ -31,8 +31,10 @@ ActiveRecord::Schema.define(version: 2021_03_29_192644) do
   create_table "locations", force: :cascade do |t|
     t.float "latitude"
     t.float "longitude"
+    t.integer "survivor_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["survivor_id"], name: "index_locations_on_survivor_id"
   end
 
   create_table "resources", force: :cascade do |t|
@@ -50,15 +52,13 @@ ActiveRecord::Schema.define(version: 2021_03_29_192644) do
     t.integer "age"
     t.integer "gender"
     t.boolean "infected", default: false
-    t.integer "location_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["location_id"], name: "index_survivors_on_location_id"
   end
 
   add_foreign_key "flags", "survivors", column: "flagged_id"
   add_foreign_key "flags", "survivors", column: "flagger_id"
+  add_foreign_key "locations", "survivors"
   add_foreign_key "resources", "items"
   add_foreign_key "resources", "survivors"
-  add_foreign_key "survivors", "locations"
 end
