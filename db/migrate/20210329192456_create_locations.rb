@@ -3,6 +3,7 @@ class CreateLocations < ActiveRecord::Migration[6.0]
     create_table :locations do |t|
       t.float :latitude
       t.float :longitude
+      t.references :survivor, null: false, foreign_key: true
 
       t.timestamps
     end
