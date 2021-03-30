@@ -8,6 +8,10 @@ RSpec.describe Api::V1::SurvivorsController, type: :controller do
       attributes_for(:survivor, 
         resources_attributes:[{item_id: -1, quantity: -1}])
     }
+    let(:invalid_location) {
+      attributes_for(:survivor, 
+        location_attributes: {latitude: -100, longitude: 200})
+    }
 
     describe 'When attributes are valid' do
       it 'Should be able to create a new survivor' do
@@ -40,6 +44,12 @@ RSpec.describe Api::V1::SurvivorsController, type: :controller do
         expect{ 
           post :create, params: { survivor: invalid_resources }
         }.not_to change(Resource, :count)
+      end
+
+      it 'Should not be able to create a new location' do
+        expect{ 
+          post :create, params: { survivor: invalid_location }
+        }.not_to change(Location, :count)
       end
     end
   end
