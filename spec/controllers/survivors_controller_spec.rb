@@ -109,6 +109,12 @@ RSpec.describe Api::V1::SurvivorsController, type: :controller do
           }
         )
       end
+
+      it 'Should not be able to get one survivor with invalid id' do
+        response = put :update, params: { id: -1,
+          survivor: {latitude: 1000, longitude: 1000} } 
+        expect(response.status).to equal(404)
+      end
     end
   end
 end
