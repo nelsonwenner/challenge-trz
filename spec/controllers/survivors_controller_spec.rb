@@ -64,5 +64,12 @@ RSpec.describe Api::V1::SurvivorsController, type: :controller do
         expect(response.status).to equal(200)
       end
     end
+
+    describe 'When attributes are invalid' do
+      it 'Should not be able to get one survivor with invalid id' do
+        response = get :show, params: { id: -1 }
+        expect(response.status).to equal(404)
+      end
+    end
   end
 end
