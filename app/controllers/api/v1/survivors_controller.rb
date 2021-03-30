@@ -1,6 +1,8 @@
 module Api
   module V1
     class SurvivorsController < ApplicationController
+      before_action :set_survivor, only: [:show]
+
       def create
         @survivor = Survivor.new(survivor_params)
 
@@ -11,7 +13,15 @@ module Api
         end
       end
 
+      def show
+        render status: 200, json: @survivor, serializer: SurvivorSerializer 
+      end
+
       private
+
+      def set_survivor
+        @survivor = Survivor.find(params[:id]) or not_found
+      end
 
       def survivor_params
         params.require(:survivor).permit(:name, :age, :gender,
