@@ -4,6 +4,10 @@ RSpec.describe Api::V1::SurvivorsController, type: :controller do
   describe 'POST #create' do
     let(:valid_survivor) { attributes_for(:survivor) }
     let(:invalid_survivor) { attributes_for(:survivor, name: -1, age: -1) }
+    let(:invalid_resources) {
+      attributes_for(:survivor, 
+        resources_attributes:[{item_id: -1, quantity: -1}])
+    }
 
     describe 'When attributes are valid' do
       it 'Should be able to create a new survivor' do
@@ -30,6 +34,12 @@ RSpec.describe Api::V1::SurvivorsController, type: :controller do
         expect{ 
           post :create, params: { survivor: invalid_survivor }
         }.not_to change(Survivor, :count)
+      end
+
+      it 'Should not be able to create a new resources' do
+        expect{ 
+          post :create, params: { survivor: invalid_resources }
+        }.not_to change(Resource, :count)
       end
     end
   end
