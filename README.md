@@ -9,9 +9,9 @@
 </p>
 
 ## :dart: ToDo
-  - [] Add survivors to the database
+  - [x] Add survivors to the database
     - A survivor must have a name, age, gender and last location (latitude, longitude). We want this database to be accurate, so add basic validation for each field. Each survivor has their inventory of resources/items. The survivor must declare all of their resources in the sign-up process. We will believe they have what they say they have. 
-  - [] Update survivor location
+  - [x] Update survivor location
     - A survivor must have the ability to update their last location, storing the new latitude/longitude pair in the base (no need to track locations, just replacing the previous one is enough).
   - [] Flag survivor as infected
     - In a chaotic situation like that, a survivor may inevitably get contaminated by the virus. When this happens, we need to flag the survivor as infected. An infected survivor cannot trade with others, can't access/manipulate their inventory, nor be listed in the reports (infected people are kinda dead anyway, see the item on reports below). So sad when people fall for the Influenzer T-Virus.
