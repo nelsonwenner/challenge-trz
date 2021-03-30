@@ -53,4 +53,16 @@ RSpec.describe Api::V1::SurvivorsController, type: :controller do
       end
     end
   end
+
+  describe 'GET #show' do
+    describe 'When attributes are valid' do
+      let(:survivor) { create(:survivor) }
+
+      it 'Should be able to get one survivor with valid id' do
+        response = get :show, params: { id: survivor.id }
+        expect(assigns(:survivor)).to be_a(Survivor)
+        expect(response.status).to equal(200)
+      end
+    end
+  end
 end
