@@ -1,6 +1,6 @@
 class Resource < ApplicationRecord
-  belongs_to :survivor, class_name: 'Survivor', foreign_key: 'survivor_id'
-  belongs_to :item, class_name: 'Item', foreign_key: 'item_id'
+  belongs_to :survivor
+  belongs_to :item
 
   validates_uniqueness_of :survivor_id, :scope => [:item_id], message: 'Unique pair resource keys'
 
