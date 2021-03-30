@@ -5,5 +5,6 @@ RSpec.configure do |config|
       :truncation,
       except: %w(ar_internal_metadata)
     )
+    load "#{Rails.root}/db/seeds.rb" 
   end
 end
