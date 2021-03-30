@@ -72,4 +72,11 @@ RSpec.describe Api::V1::SurvivorsController, type: :controller do
       end
     end
   end
+
+  describe 'GET #index' do
+    it 'Should return a successful response' do
+      get :index
+      expect(response).to be_successful
+    end
+  end
 end
