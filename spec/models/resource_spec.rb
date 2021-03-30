@@ -13,4 +13,12 @@ RSpec.describe Resource, type: :model do
       .with_foreign_key('item_id')  
     }
   end
+  describe 'Validations' do    
+    it { should validate_presence_of(:quantity) }
+    it { 
+      should validate_numericality_of(:quantity)
+      .is_greater_than_or_equal_to(0)
+      .only_integer() 
+    }
+  end
 end
