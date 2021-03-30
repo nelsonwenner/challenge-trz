@@ -13,11 +13,19 @@ module Api
         end
       end
 
+      def index
+        render status: 200, json: survivors, each_serializer: SurvivorSerializer
+      end
+
       def show
         render status: 200, json: @survivor, serializer: SurvivorSerializer 
       end
 
       private
+
+      def survivors
+        @survivor ||= Survivor.all
+      end
 
       def set_survivor
         @survivor = Survivor.find(params[:id]) or not_found
