@@ -1,4 +1,6 @@
 class Survivor < ApplicationRecord
+  scope :is_infected, -> { where(infected: true) }
+
   has_one :location, class_name: 'Location'
   has_many :resources, class_name: 'Resource'
 
