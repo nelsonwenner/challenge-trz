@@ -6,6 +6,7 @@ ruby '2.7.2'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.5'
 gem 'sqlite3', '~> 1.4'
 gem 'puma', '~> 4.1'
+gem 'active_model_serializers', '~> 0.10.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development do
