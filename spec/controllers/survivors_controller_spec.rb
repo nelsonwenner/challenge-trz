@@ -96,5 +96,19 @@ RSpec.describe Api::V1::SurvivorsController, type: :controller do
         expect(eval(response.body)[:location][:longitude]).to equal(180.0)
       end
     end
+
+    describe 'When attributes are invalid' do
+      it 'Should not be able to update survivor location latitude and longitude' do
+        response = put :update, params: { id: survivor.id,
+          survivor: {latitude: 1000, longitude: 1000} } 
+        expect(eval(response.body)).to eq({
+          "errors":{
+            "latitude":["must be less than or equal to 90"],
+            "longitude":["must be less than or equal to 180"]
+            }
+          }
+        )
+      end
+    end
   end
 end
