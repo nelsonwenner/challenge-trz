@@ -13,4 +13,14 @@ RSpec.describe Flag, type: :model do
       .with_foreign_key('flagged_id')  
     }
   end
+
+  describe 'Uniqueness' do
+    subject { create(:flag) }
+  
+    it { 
+      should validate_uniqueness_of(:flagger_id)
+      .scoped_to(:flagged_id)
+      .with_message('Unique pair flag, A survivor cannot flagger the same flagged twice.') 
+    }
+  end
 end
