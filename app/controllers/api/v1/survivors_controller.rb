@@ -25,7 +25,7 @@ module Api
         if @survivor.location.update(location_params) 
           render status: 200, json: @survivor, serializer: SurvivorSerializer 
         else 
-          render status: 400, json: errors(@survivor)
+          render status: 400, json: errors(@survivor.location)
         end
       end
 
