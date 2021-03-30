@@ -89,6 +89,12 @@ RSpec.describe Api::V1::SurvivorsController, type: :controller do
           survivor: {latitude: 90, longitude: 180} } 
         expect(eval(response.body)[:location][:latitude]).to equal(90.0)
       end
+
+      it 'Should be able to update survivor location longitude' do
+        response = put :update, params: { id: survivor.id,
+          survivor: {latitude: 90, longitude: 180} } 
+        expect(eval(response.body)[:location][:longitude]).to equal(180.0)
+      end
     end
   end
 end
