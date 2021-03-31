@@ -18,7 +18,7 @@ module TradesManager
 
     def verify_survivors_infected(sender, target)
       if sender.infected or target.infected
-        rescue raise Exception.new 'infected survivors cannot trade'
+        raise Exception.new 'infected survivors cannot trade'
       end
     end
 
