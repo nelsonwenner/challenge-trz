@@ -11,6 +11,7 @@ module TradesManager
     def call
       verify_survivors_infected(@sender, @target)
       resources_checker(@sender, @sender_resources, 'sender')
+      resources_checker(@target, @target_resources, 'target')
     rescue Exception => err
       OpenStruct.new({success?: false, errors: err})
     else
