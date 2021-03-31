@@ -52,6 +52,19 @@ RSpec.describe Api::V1::FlagsController, type: :controller do
           'flag': ['You cannot self-flag']})
         }.to change(Flag, :count).by(0)
       end
+
+      it 'should not be able to signal a survivor as a infected' do
+        expect{ 
+          post :create, params: { flag: 
+            {
+              flagger_id: 3, 
+              flagged_id: sender5.id
+            } 
+          }
+          expect(eval(response.body)).to eq({
+          'error': 'An infected survivor cannot signal'})
+        }.to change(Flag, :count).by(0)
+      end
     end
   end
 end
