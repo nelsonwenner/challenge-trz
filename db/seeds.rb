@@ -13,3 +13,4 @@ Item.create(name: 'AK47', value: 8)
 
 Survivor.create(name: 'Nelson', age: 28, gender: 'male')
 Survivor.create(name: 'Carlos', age: 30, gender: 'male')
+Survivor.create(name: 'Elcy', age: 20, gender: 'female', infected: true)
