@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :survivors
       resources :flags, only: [:create]
+      resources :trades, only: [:create]
     end
   end
 end
