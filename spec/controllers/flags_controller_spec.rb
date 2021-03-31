@@ -38,5 +38,20 @@ RSpec.describe Api::V1::FlagsController, type: :controller do
         }.to change(target, :infected).to(true)
       end
     end
+
+    describe 'When attributes are invalid' do
+      it 'Should not be able to create a new flag, cannot self-flag' do
+        expect{ 
+          post :create, params: { flag: 
+            {
+              flagger_id: sender1.id, 
+              flagged_id: sender1.id
+            } 
+          }
+          expect(eval(response.body)[:errors]).to eq({
+          'flag': ['You cannot self-flag']})
+        }.to change(Flag, :count).by(0)
+      end
+    end
   end
 end
