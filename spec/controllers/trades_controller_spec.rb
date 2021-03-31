@@ -47,6 +47,19 @@ RSpec.describe Api::V1::TradesController, type: :controller do
           {'errors':'target does not have this resources quantity'}
         )
       end
+
+      it 'Should not be able to find the resource with id invalid' do
+        response = post :create, params: { trade: {
+            sender_id: sender.id, 
+            sender_resources: [{item_id: -1, quantity: 10}],
+            target_id: target.id, 
+            target_resources: [{item_id: 2, quantity: 30}]
+          }
+        }
+        expect(eval(response.body)).to eq(
+          {'errors':'sender resource item_id -1 not found'}
+        )
+      end
     end
   end
 end
