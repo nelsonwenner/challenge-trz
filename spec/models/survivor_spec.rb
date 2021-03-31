@@ -7,12 +7,12 @@ RSpec.describe Survivor, type: :model do
       .class_name('Location')
     }
     it { 
-      should have_many(:flagger)
+      should have_many(:flags_sender)
       .class_name('Flag')
       .with_foreign_key('flagger_id')
     }
     it { 
-      should have_many(:flagged)
+      should have_many(:flags_target)
       .class_name('Flag')
       .with_foreign_key('flagged_id')
     }
