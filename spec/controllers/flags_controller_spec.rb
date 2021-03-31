@@ -61,8 +61,8 @@ RSpec.describe Api::V1::FlagsController, type: :controller do
               flagged_id: sender5.id
             } 
           }
-          expect(eval(response.body)).to eq({
-          'error': 'An infected survivor cannot signal'})
+          expect(eval(response.body)[:errors]).to eq({
+          'flag': ['An infected survivor cannot signal']})
         }.to change(Flag, :count).by(0)
       end
     end
