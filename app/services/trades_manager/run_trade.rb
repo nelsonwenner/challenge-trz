@@ -10,6 +10,7 @@ module TradesManager
     
     def call
       verify_survivors_infected(@sender, @target)
+      resources_checker(@sender, @sender_resources, 'sender')
     rescue Exception => err
       OpenStruct.new({success?: false, errors: err})
     else
@@ -21,6 +22,22 @@ module TradesManager
         raise Exception.new 'infected survivors cannot trade'
       end
     end
+
+    def resources_checker(survivor, resources, name)
+      resources.each { |sent_resource|
+        current_resource = survivor.resources.where(
+          item_id: sent_resource[:item_id]
+        ).first
+
+        raise Exception.new(
+          "#{name} resource item_id #{sent_resource[:item_id]} not found"
+        ) if current_resource.nil?
+
+        if current_resource.quantity < sent_resource[:quantity].to_i
+          raise Exception.new("#{name} does not have this resources quantity")
+        end
+      }
+    end 
 
     private
 
