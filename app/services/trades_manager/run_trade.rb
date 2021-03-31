@@ -12,6 +12,7 @@ module TradesManager
       verify_survivors_infected(@sender, @target)
       resources_checker(@sender, @sender_resources, 'sender')
       resources_checker(@target, @target_resources, 'target')
+      points_checker(@sender_resources, @target_resources)
     rescue Exception => err
       OpenStruct.new({success?: false, errors: err})
     else
@@ -38,7 +39,24 @@ module TradesManager
           raise Exception.new("#{name} does not have this resources quantity")
         end
       }
-    end 
+    end
+    
+    def points_checker(sender_resources, target_resources)
+      sender_points = calculate_points(sender_resources)
+      target_points = calculate_points(target_resources)
+      
+      if sender_points != target_points
+        raise Exception.new(
+          "The scores of the target's resources are different from the sender"
+        )
+      end
+    end
+
+    def calculate_points(resources)
+      resources.reduce(0) { |memo, hash|
+        memo += Item.find(hash[:item_id]).value * hash[:quantity].to_i
+      }
+    end
 
     private
 
