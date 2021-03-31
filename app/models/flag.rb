@@ -4,7 +4,6 @@ class Flag < ApplicationRecord
 
   validates_uniqueness_of :flagger_id, :scope => [:flagged_id], message: 'Unique pair flag, A survivor cannot flagger the same flagged twice.'
 
-  before_save :check_flagger_is_infected
   after_save :check_flaggers_received
   validate :check_self_flag
 
@@ -13,12 +12,6 @@ class Flag < ApplicationRecord
   def check_self_flag
     if self.flagger_id == self.flagged_id
       self.errors.add(:flag, 'You cannot self-flag')  
-    end
-  end
-
-  def check_flagger_is_infected
-    if self.flagger.infected
-      self.errors.add(:flag, 'An infected survivor cannot signal')  
     end
   end
 
