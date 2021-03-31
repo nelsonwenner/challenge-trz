@@ -15,11 +15,18 @@ RSpec.describe Flag, type: :model do
   end
 
   describe 'Validations' do
-    let(:subject) { Flag.create(flagger_id: 1, flagged_id: 1) }
+    let(:subject_self_flag) { Flag.create(flagger_id: 1, flagged_id: 1) }
+    let(:subject_infected) { Flag.create(flagger_id: 3, flagged_id: 1) }
 
     it 'Should not self-flag' do
-      expect(subject.errors.messages).to eq({
+      expect(subject_self_flag.errors.messages).to eq({
         'flag': ['You cannot self-flag']
+      })
+    end
+
+    it 'Should no signal, survivor infected' do
+      expect(subject_infected.errors.messages).to eq({
+        'flag': ['An infected survivor cannot signal']
       })
     end
   end
