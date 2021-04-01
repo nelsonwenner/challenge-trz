@@ -87,6 +87,19 @@ RSpec.describe Api::V1::TradesController, type: :controller do
           {'errors':"The scores of the target's resources are different from the sender"}
         )
       end
+
+      it 'Should not be able to trade, sender not found with id invalid' do
+        response = post :create, params: { trade: {
+            sender_id: -1, 
+            sender_resources: [{item_id: 1, quantity: 10}],
+            target_id: target.id, 
+            target_resources: [{item_id: 2, quantity: 10}]
+          }
+        }
+        expect(eval(response.body)).to eq(
+          {'errors':"Survivor not found"}
+        )
+      end
     end
   end
 end
