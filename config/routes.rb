@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       namespace :reports do
         get 'resources', to: 'resources_average_reports#index'
         get 'survivors', to: 'survivor_reports#index'
+        get 'survivors/:id/scores', to: 'score_lost_survivor_infected_reports#show'
       end
     end
   end
