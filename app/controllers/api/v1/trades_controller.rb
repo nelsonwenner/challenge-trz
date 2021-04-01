@@ -11,7 +11,7 @@ module Api
         )
 
         if result && result.success?
-          render status: 201, json: { message: "successfully" }
+          render status: 201, json: result.payload
         else
           render status: 400, json: errors(result)
         end
