@@ -9,5 +9,11 @@ RSpec.describe Api::V1::Reports::ScoreLostSurvivorInfectedReportsController, typ
       expect(response.status).to equal(200)
       expect(eval(response.body)[:scores_lost]).to eq(100)
     end
+
+    it 'Should not be able to return lost score, survivor not found' do
+      get :show, params: { id: -1 }
+      expect(response.status).to equal(404)
+      expect(eval(response.body)).to eq({errors:'Survivor not found'})
+    end
   end
 end
