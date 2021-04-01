@@ -13,10 +13,19 @@ module TradesManager
       resources_checker(@sender, @sender_resources, 'sender')
       resources_checker(@target, @target_resources, 'target')
       points_checker(@sender_resources, @target_resources)
+
+      ActiveRecord::Base.transaction do
+        swap_resources(@sender, @sender_resources, @target)
+        swap_resources(@target, @target_resources, @sender)
+        @sender.save
+        @target.save
+      end
+
+      result = {sender: @sender.resources, target: @target.resources}
     rescue Exception => err
       OpenStruct.new({success?: false, errors: err})
     else
-      OpenStruct.new({success?: true})
+      OpenStruct.new({success?: true, payload: result})
     end
 
     def verify_survivors_infected(sender, target)
@@ -55,6 +64,24 @@ module TradesManager
     def calculate_points(resources)
       resources.reduce(0) { |memo, hash|
         memo += Item.find(hash[:item_id]).value * hash[:quantity].to_i
+      }
+    end
+
+    def swap_resources(sender, sender_resources, target)
+      sender_resources.each { |hash_resource|
+        item_id = hash_resource[:item_id].to_i
+        quantity = hash_resource[:quantity].to_i
+
+        sender_resource = sender.resources.find { |i| i.item_id == item_id }
+        sender_resource.quantity -= quantity
+
+        target_resource = target.resources.find { |i| i.item_id == item_id }
+
+        if target_resource.nil?
+          target.resources.create(item_id: item_id, quantity: quantity)
+        else
+          target_resource.quantity += quantity
+        end
       }
     end
 
