@@ -5,10 +5,24 @@ RSpec.describe Api::V1::TradesController, type: :controller do
     let(:sender) { create(:survivor, resources_attributes:[
     {item_id: 1, quantity: 10}, {item_id: 2, quantity: 20}])}
     let(:target) { create(:survivor, resources_attributes:[
-    {item_id: 2, quantity: 20}])}
+    {item_id: 2, quantity: 20}, {item_id: 3, quantity: 20}, 
+    {item_id: 4, quantity: 20}])}
     let(:infected_id) { 3 }
 
     describe 'When attributes are valid' do
+      it 'Should survivors be able to trade' do
+        response = post :create, params: { trade: {
+            sender_id: sender.id, 
+            sender_resources: [{item_id: 2, quantity: 4}],
+            target_id: target.id, 
+            target_resources: [{item_id: 4, quantity: 6}]
+          }
+        }
+        expect(response.status).to equal(201)
+      end
+    end
+
+    describe 'When attributes are invalid' do
       it 'Should not be able to trade with a infected' do
         response = post :create, params: { trade: {
             sender_id: infected_id, 
