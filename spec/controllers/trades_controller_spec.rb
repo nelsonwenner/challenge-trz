@@ -100,6 +100,19 @@ RSpec.describe Api::V1::TradesController, type: :controller do
           {'errors':"Survivor not found"}
         )
       end
+
+      it 'Should not be able to trade, target not found with id invalid' do
+        response = post :create, params: { trade: {
+            sender_id: sender.id, 
+            sender_resources: [{item_id: 1, quantity: 10}],
+            target_id: -1, 
+            target_resources: [{item_id: 2, quantity: 10}]
+          }
+        }
+        expect(eval(response.body)).to eq(
+          {'errors':"Survivor not found"}
+        )
+      end
     end
   end
 end
