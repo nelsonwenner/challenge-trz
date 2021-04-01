@@ -21,7 +21,11 @@ module TradesManager
         @target.save
       end
 
-      result = {sender: @sender.resources, target: @target.resources}
+      result = {
+        sender: SurvivorSerializer.new(@sender), 
+        target: SurvivorSerializer.new(@target)
+      }
+      
     rescue Exception => err
       OpenStruct.new({success?: false, errors: err})
     else
@@ -36,15 +40,15 @@ module TradesManager
 
     def resources_checker(survivor, resources, name)
       resources.each { |sent_resource|
-        current_resource = survivor.resources.where(
-          item_id: sent_resource[:item_id]
-        ).first
+        item_id = sent_resource[:item_id].to_i
+        quantity = sent_resource[:quantity].to_i
 
-        raise Exception.new(
-          "#{name} resource item_id #{sent_resource[:item_id]} not found"
+        current_resource = survivor.resources.find { |i| i.item_id == item_id }
+
+        raise Exception.new("#{name} resource item_id #{item_id} not found"
         ) if current_resource.nil?
 
-        if current_resource.quantity < sent_resource[:quantity].to_i
+        if current_resource.quantity < quantity
           raise Exception.new("#{name} does not have this resources quantity")
         end
       }
@@ -63,7 +67,7 @@ module TradesManager
 
     def calculate_points(resources)
       resources.reduce(0) { |memo, hash|
-        memo += Item.find(hash[:item_id]).value * hash[:quantity].to_i
+        memo += Item.find(hash[:item_id].to_i).value * hash[:quantity].to_i
       }
     end
 
