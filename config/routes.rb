@@ -4,6 +4,10 @@ Rails.application.routes.draw do
       resources :survivors
       resources :flags, only: [:create]
       resources :trades, only: [:create]
+
+      namespace :reports do
+        get 'resources', to: 'resources_average_reports#index'
+      end
     end
   end
 end
