@@ -1,10 +1,9 @@
 module Api
   module V1
     class TradesController < ApplicationController
-      def create
-        @sender = Survivor.find(trade_params[:sender_id]) or not_found
-        @target = Survivor.find(trade_params[:target_id]) or not_found
+      before_action :set_sender_and_target, only: [:create]
 
+      def create
         result = TradesManager::RunTrade.call(@sender, @target,
           trade_params[:sender_resources],
           trade_params[:target_resources]
@@ -18,6 +17,11 @@ module Api
       end      
 
       private
+
+      def set_sender_and_target
+        @sender = Survivor.find(trade_params[:sender_id]) or not_found
+        @target = Survivor.find(trade_params[:target_id]) or not_found
+      end
 
       def trade_params 
         params.require(:trade).permit(
