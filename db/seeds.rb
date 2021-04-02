@@ -15,6 +15,10 @@ survivor1 = Survivor.create(name: 'Nelson', age: 28, gender: 'male')
 survivor2 = Survivor.create(name: 'Carlos', age: 30, gender: 'male')
 survivor3 = Survivor.create(name: 'Elcy', age: 20, gender: 'female', infected: true)
 
+Location.create(survivor_id: survivor1.id, latitude: 90, longitude: 180)
+Location.create(survivor_id: survivor2.id, latitude: 40, longitude: 100)
+Location.create(survivor_id: survivor3.id, latitude: 20, longitude: 80)
+
 survivor1.resources.create(item_id: 1, quantity: 10)
 survivor1.resources.create(item_id: 4, quantity: 10)
 survivor2.resources.create(item_id: 3, quantity: 15)
