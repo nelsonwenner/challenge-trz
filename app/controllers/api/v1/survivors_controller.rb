@@ -47,7 +47,7 @@ module Api
       end
 
       def location_params
-        params.require(:survivor).permit(:latitude, :longitude)
+        params.permit(:latitude, :longitude)
       end
 
       def errors(record)
