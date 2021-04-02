@@ -1,0 +1,1140 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.3.0",
+    "title": "The Resident Zombie Backend API",
+    "description": "The world, as we know it, has fallen into an apocalyptic scenario. The Influenzer T-Virus (a.k.a. Twiter Virus) is transforming human beings into stupid beasts (a.k.a. Zombies), hungry to cancel humans and eat their limbs.",
+    "termsOfService": "http://api_url/terms/",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/",
+      "description": "Production Server"
+    },
+    {
+      "url": "http://localhost:3000/",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/api/v1/survivors": {
+      "post": {
+        "tags": [
+          "Survivors"
+        ],
+        "description": "Create a new survivor",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Survivor"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The survivor has been created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SurvivorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Survivors"
+        ],
+        "responses": {
+          "200": {
+            "description": "List all survivors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/SurvivorResponse"  
+                      },
+                      {
+                        "$ref": "#/components/schemas/SurvivorResponse"  
+                      },
+                      {
+                        "$ref": "#/components/schemas/SurvivorResponse"  
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/survivors/{survivor_id}": {
+      "get": {
+        "tags": [
+          "Survivors"
+        ],
+        "description": "Show survivor",
+         "parameters": [
+          {
+            "name": "survivor_id",
+            "in": "path",
+            "description": "id of survivor",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Show survivor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SurvivorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Survivor does not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Survivor not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/survivors/{survivor_id}/locations": {
+      "put": {
+        "tags": [
+          "Survivors"
+        ],
+        "description": "Update locations survivor",
+        "parameters": [
+          {
+            "name": "survivor_id",
+            "in": "path",
+            "description": "id of survivor",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Location"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "The survivor has been created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Location"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/flags": {
+      "post": {
+        "tags": [
+          "Flags"
+        ],
+        "description": "Flagger survivor",
+         "parameters": [],
+         "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Flag"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Show survivor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Survivor does not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "errors": "Survivor not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/trades": {
+      "post": {
+        "tags": [
+          "Trades"
+        ],
+        "description": "Trade",
+         "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Trade"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Show survivor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TradeResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Survivor does not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Survivor not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/reports/resources": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "responses": {
+          "200": {
+            "description": "List all resources average reports",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "description": "Resources Average Reports",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Fiji Water"
+                          },
+                          "average": {
+                            "type": "number",
+                            "example": 5.0
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "description": "Resources Average Reports",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 2
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Campbell Soup"
+                          },
+                          "average": {
+                            "type": "number",
+                            "example": 0.0
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "description": "Resources Average Reports",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 3
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "First Aid Pouch"
+                          },
+                          "average": {
+                            "type": "number",
+                            "example": 7.5
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "description": "Resources Average Reports",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 4
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "AK47"
+                          },
+                          "average": {
+                            "type": "number",
+                            "example": 5.0
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        } 
+      }
+    },
+    "/api/v1/reports/survivors": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "responses": {
+          "200": {
+            "description": "Percentage infected and not infected reports",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "percentage_infecteds": {
+                      "type": "number",
+                      "example": 33.0
+                    },
+                    "percentage_not_infecteds": {
+                      "type": "number",
+                      "example": 66.0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        } 
+      }
+    },
+    "/api/v1/reports/survivors/{survivor_id}/scores": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "description": "Show lost scores",
+         "parameters": [
+          {
+            "name": "survivor_id",
+            "in": "path",
+            "description": "id of survivor",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lost scores",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "survivor": {
+                     "$ref": "#/components/schemas/SurvivorInfectedResponse"
+                    },
+                    "scores_lost": {
+                      "type": "number",
+                      "example": 100.0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Survivor does not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Survivor not found"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Survivor not infected",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Survivor not infected"
+                }
+              }
+            }
+          }
+        } 
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "id": {
+        "type": "integer",
+        "format": "id",
+        "description": "this field is a id",
+        "example": 1
+      },
+      "survivor_id_4": {
+        "type": "integer",
+        "format": "id",
+        "description": "this field is a id",
+        "example": 4
+      },
+      "name": {
+        "type": "string",
+        "example": "Wenner"
+      },
+      "age": {
+        "type": "number",
+        "example": 20
+      },
+      "gender": {
+        "type": "string",
+        "example": "male"
+      },
+      "Location": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "example": 90
+          },
+          "longitude": {
+            "type": "number",
+            "example": 180
+          }
+        }
+      },
+      "itemFijiWater": {
+        "type": "object",
+        "description": "Fiji Water",
+        "properties": {
+          "item_id": {
+            "type": "integer",
+            "example": 1
+          },
+          "quantity": {
+            "type": "number",
+            "example": 10
+          }
+        }
+      },
+      "itemCampbellSoup": {
+        "type": "object",
+        "description": "Campbell Soup",
+        "properties": {
+          "item_id": {
+            "type": "integer",
+            "example": 2
+          },
+          "quantity": {
+            "type": "number",
+            "example": 4
+          }
+        }
+      },
+       "itemFirstAidPouch": {
+        "type": "object",
+        "description": "First Aid Pouch",
+        "properties": {
+          "item_id": {
+            "type": "integer",
+            "example": 3
+          },
+          "quantity": {
+            "type": "number",
+            "example": 4
+          }
+        }
+      },
+      "itemAK47": {
+        "type": "object",
+        "description": "AK47",
+        "properties": {
+          "item_id": {
+            "type": "integer",
+            "example": 4
+          },
+          "quantity": {
+            "type": "number",
+            "example": 5
+          }
+        }
+      },
+      "Survivor": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/name"
+          },
+          "age": {
+            "$ref": "#/components/schemas/age"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/gender"
+          },
+          "location_attributes": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "resources_attributes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/itemFijiWater"
+                },
+                {
+                  "$ref": "#/components/schemas/itemCampbellSoup"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "SurvivorResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/survivor_id_4"
+          },
+          "name": {
+            "$ref": "#/components/schemas/name"
+          },
+          "age": {
+            "$ref": "#/components/schemas/age"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/gender"
+          },
+          "infected": {
+          "type": "boolean",
+          "example": false
+          },
+          "location": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "resources": {
+            "type": "array",
+             "items": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/resourceFijiWater"
+                },
+                 {
+                  "$ref": "#/components/schemas/resourceCampbellSoup"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "SurvivorInfectedResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 3
+          },
+          "name": {
+            "type": "string",
+            "example": "Elcy"
+          },
+          "age": {
+            "type": "number",
+            "example": 20
+          },
+          "gender": {
+            "type": "string",
+            "example": "female"
+          },
+          "infected": {
+          "type": "boolean",
+          "example": true
+          },
+          "location": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "resources": {
+            "type": "array",
+             "items": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/resourceFirstAidPouch"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "FijiWater": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "id",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Fiji Water"
+          },
+          "value": {
+            "type": "number",
+            "example": 14
+          }
+        }
+      },
+      "FirstAidPouch": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "id",
+            "example": 3
+          },
+          "name": {
+            "type": "string",
+            "example": "First Aid Pouch"
+          },
+          "value": {
+            "type": "number",
+            "example": 10
+          }
+        }
+      },
+      "AK47": {
+       "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "id",
+            "example": 4
+          },
+          "name": {
+            "type": "string",
+            "example": "AK47"
+          },
+          "value": {
+            "type": "number",
+            "example": 8
+          }
+        }
+      },
+      "resourceFijiWater": {
+        "type": "object",
+        "properties": {
+         "id": {
+            "type": "number",
+            "example": 1
+          },
+          "survivor_id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "item_id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 10
+          },
+          "item": {
+            "$ref": "#/components/schemas/FijiWater"
+          }
+        }
+      },
+       "resourceFirstAidPouch": {
+        "type": "object",
+        "properties": {
+         "id": {
+            "type": "number",
+            "example": 3
+          },
+          "survivor_id": {
+            "type": "integer",
+            "example": 3
+          },
+          "item_id": {
+            "type": "integer",
+            "example": 3
+          },
+          "quantity": {
+            "type": "number",
+            "example": 10
+          },
+          "item": {
+            "$ref": "#/components/schemas/FirstAidPouch"
+          }
+        }
+      },
+      "CampbellSoup": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "id",
+            "example": 2
+          },
+          "name": {
+            "type": "string",
+            "example": "Campbell Soup"
+          },
+          "value": {
+            "type": "number",
+            "example": 12
+          }
+        }
+      },
+      "resourceCampbellSoup": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 2
+          },
+          "survivor_id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "item_id": {
+            "type": "number",
+            "example": 2
+          },
+          "quantity": {
+            "type": "number",
+            "example": 10
+          },
+          "item": {
+            "$ref": "#/components/schemas/CampbellSoup"
+          }
+        }
+      },
+      "tradeSenderResponseAK47": {
+        "type": "object",
+        "properties": {
+         "id": {
+            "type": "number",
+            "example": 1
+          },
+          "survivor_id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "item_id": {
+            "type": "number",
+            "example": 4
+          },
+          "quantity": {
+            "type": "number",
+            "example": 5
+          },
+          "item": {
+            "$ref": "#/components/schemas/AK47"
+          }
+        }
+      },
+      "tradeTargetResponseAK47": {
+        "type": "object",
+        "properties": {
+         "id": {
+            "type": "number",
+            "example": 2
+          },
+          "survivor_id": {
+            "type": "number",
+            "example": 2
+          },
+          "item_id": {
+            "type": "number",
+            "example": 4
+          },
+          "quantity": {
+            "type": "number",
+            "example": 5
+          },
+          "item": {
+            "$ref": "#/components/schemas/AK47"
+          }
+        }
+      },
+      "tradeSenderResponseFirstAidPouch": {
+        "type": "object",
+        "properties": {
+         "id": {
+            "type": "number",
+            "example": 2
+          },
+          "survivor_id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "item_id": {
+            "type": "number",
+            "example": 3
+          },
+          "quantity": {
+            "type": "number",
+            "example": 4
+          },
+          "item": {
+            "$ref": "#/components/schemas/FirstAidPouch"
+          }
+        }
+      },
+      "tradeTargetResponseFirstAidPouch": {
+        "type": "object",
+        "properties": {
+         "id": {
+            "type": "number",
+            "example": 1
+          },
+          "survivor_id": {
+            "type": "number",
+            "example": 2
+          },
+          "item_id": {
+            "type": "number",
+            "example": 3
+          },
+          "quantity": {
+            "type": "number",
+            "example": 6
+          },
+          "item": {
+            "$ref": "#/components/schemas/FirstAidPouch"
+          }
+        }
+      },
+      "Flag": {
+        "type": "object",
+        "properties": {
+          "flagger_id": {
+            "type": "integer",
+            "format": "id",
+            "example": 1 
+          },
+          "flagged_id": {
+            "type": "integer",
+            "format": "id",
+            "example": 2
+          }
+        }
+      },
+      "FlagResponse": {
+        "type": "object",
+        "properties": {
+          "flagger": {
+            "$ref": "#/components/schemas/FlaggerSurvivorResponse"
+          },
+          "flagged": {
+            "$ref": "#/components/schemas/FlaggedSurvivorResponse"
+          }
+        }
+      },
+      "FlaggerSurvivorResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Nelson"
+          },
+          "age": {
+            "type": "integer",
+            "example": 28
+          },
+          "gender": {
+            "type": "string",
+            "example": "male"
+          },
+          "infected": {
+          "type": "boolean",
+          "example": false
+          },
+          "location": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "resources": {
+            "type": "array",
+             "items": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/resourceFijiWater"
+                },
+                 {
+                  "$ref": "#/components/schemas/resourceCampbellSoup"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "FlaggedSurvivorResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 2
+          },
+          "name": {
+            "type": "string",
+            "example": "Carlos"
+          },
+          "age": {
+            "type": "integer",
+            "example": 30
+          },
+          "gender": {
+            "type": "string",
+            "example": "male"
+          },
+          "infected": {
+          "type": "boolean",
+          "example": false
+          },
+          "location": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "resources": {
+            "type": "array",
+             "items": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/resourceFijiWater"
+                },
+                 {
+                  "$ref": "#/components/schemas/resourceCampbellSoup"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "Trade": {
+        "type": "object",
+        "properties": {
+          "sender_id": {
+            "type": "integer",
+            "format": "id",
+            "example": 1
+          },
+          "sender_resources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/itemAK47"
+                }
+              ]
+            }
+          },
+          "target_id": {
+            "type": "integer",
+            "format": "id",
+            "example": 2
+          },
+          "target_resources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/itemFirstAidPouch"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "TradeResponse": {
+        "type": "object",
+        "properties": {
+          "sender": {
+            "$ref": "#/components/schemas/TradeSenderSurvivorResponse"
+          },
+          "target": {
+            "$ref": "#/components/schemas/TradeTargetSurvivorResponse"
+          }
+        }
+      },
+      "TradeSenderSurvivorResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Nelson"
+          },
+          "age": {
+            "type": "integer",
+            "example": 28
+          },
+          "gender": {
+            "type": "string",
+            "example": "male"
+          },
+          "infected": {
+          "type": "boolean",
+          "example": false
+          },
+          "location": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "resources": {
+            "type": "array",
+             "items": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/tradeSenderResponseAK47"
+                },
+                {
+                  "$ref": "#/components/schemas/tradeSenderResponseFirstAidPouch"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "TradeTargetSurvivorResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 2
+          },
+          "name": {
+            "type": "string",
+            "example": "Carlos"
+          },
+          "age": {
+            "type": "integer",
+            "example": 30
+          },
+          "gender": {
+            "type": "string",
+            "example": "male"
+          },
+          "infected": {
+          "type": "boolean",
+          "example": false
+          },
+          "location": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "resources": {
+            "type": "array",
+             "items": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/tradeTargetResponseFirstAidPouch"
+                },
+                {
+                  "$ref": "#/components/schemas/tradeTargetResponseAK47"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
