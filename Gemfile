@@ -25,6 +25,7 @@ group :development, :test do
   gem 'awesome_print', '~> 1.8'
   gem 'pry-rails', '~> 0.3.9'
   gem 'pry', '~> 0.13.1'
+  gem 'rswag'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
