@@ -1,6 +1,8 @@
 class SurvivorSerializer < ActiveModel::Serializer
-  attributes :id, :infected, :name, :age, :gender, :created_at, :updated_at
+  attributes :id, :infected, :name, :age, :gender, :location, 
+             :resources, :created_at, :updated_at
 
-  has_one :location
-  has_many :resources
+  def resources
+    object.resources.as_json(include: :item)
+  end
 end
