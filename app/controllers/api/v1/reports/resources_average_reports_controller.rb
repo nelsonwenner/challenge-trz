@@ -10,10 +10,10 @@ module Api
             total = item.not_infected_resources.reduce(0) { |memo, resource|
               memo += resource.quantity
             }
-            resources_average << ResourceAverageReportsSerializer.new(item, {
-                survivors_amount: survivors_amount, total: total
-              }
-            )
+            resources_average << {
+              id: item.id, name: item.name,
+              average: total / survivors_amount
+            }
           end
 
           render status: 200, json: resources_average.to_json
