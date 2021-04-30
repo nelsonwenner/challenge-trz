@@ -5,7 +5,7 @@
 ## :mag_right: Database diagram
 
 <p align="center">
-  <img alt="diagram" src="https://user-images.githubusercontent.com/40550247/113447445-4381e900-93d0-11eb-8b66-d5f737ce66a2.png" />
+  <img alt="diagram" src="https://user-images.githubusercontent.com/40550247/116635291-c2693380-a934-11eb-9c80-9cb4699e7dea.png" />
 </p>
 
 ## :rocket: Technologies
